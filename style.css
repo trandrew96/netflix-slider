@@ -1,15 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap");
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-html {
-  box-sizing: border-box;
+/*
+*
+* Boiler Plate stuff 
+*
+*********************************/
+:root {
+  --movie-width: 16vw;
+  --arrow-width: 50px;
 }
 
 body {
-  box-sizing: inherit;
   background-color: #141414;
   font-family: "Heebo", sans-serif;
 }
@@ -18,8 +17,79 @@ body {
   position: relative;
 }
 
+.logo {
+  color: red;
+  font-size: 4rem;
+  text-align: center;
+}
+
+/*
+*
+* THE SLIDER CONTAINER
+*
+*********************************/
+.slider {
+  margin-top: 150px;
+  height: 120%;
+  width: 100%;
+  overflow-x: scroll;
+  white-space: nowrap;
+  position: relative;
+}
+
+/*
+*
+* SLIDER INDICATORS
+*
+*********************************/
+.container-indicators {
+  width: 100px;
+  position: absolute;
+  right: 0;
+  top: -40px;
+}
+.indicator {
+  width: 15px;
+  height: 2px;
+  background-color: grey;
+  display: inline-block;
+}
+.indicator.active {
+  background-color: white;
+}
+
+/*
+*
+* MOVIE ELEMENTS!
+*
+*********************************/
+.movie {
+  width: var(--movie-width);
+  height: 200px;
+  display: inline-block;
+  position: relative;
+  color: white;
+  padding: 0 2px;
+}
+
+.movie:nth-of-type(1) {
+  margin-left: var(--arrow-width);
+}
+
+.movie img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+/*
+*
+* BUTTONS
+*
+*********************************/
 .btn-nav {
-  width: 50px;
+  width: var(--arrow-width);
   height: 100%;
   border-radius: 5px;
   position: absolute;
@@ -37,36 +107,4 @@ body {
 #moveRight {
   right: 0;
   top: 0;
-}
-
-.slider {
-  height: 120%;
-  width: 100%;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
-
-ul > li {
-  display: inline-block;
-  zoom: 1;
-  *display: inline;
-  width: 16%;
-}
-
-.item {
-  height: 100%;
-  position: relative;
-  color: white;
-  padding: 0 2px;
-}
-
-.item h1 {
-  position: absolute;
-}
-
-.item img {
-  object-fit: cover;
-  width: 100%;
-  height: 170px;
-  border-radius: 10px;
 }

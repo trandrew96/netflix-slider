@@ -1,38 +1,58 @@
 const slider = document.querySelector(".slider");
 const btnLeft = document.getElementById("moveLeft");
 const btnRight = document.getElementById("moveRight");
+const indicators = document.querySelectorAll(".indicator");
+
+let baseSliderWidth = slider.offsetWidth;
+let activeIndex = 0;
 
 let imgs = [
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABdoQerpY3uXBUFRN-OFZrx75fE0plbeShc-EDS1lzvluhSZFd6NP_5ejooyopmvH4MizQ41WVIJeb1GX6h-BNrF0BWk.webp?r=0da",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABZ9wtw2T7b4Lifg9PJqhUDF-MlHhRzhewj3Fn6F9CDKrvIzsWh2Dk4_ILCmWAR6ws9uMNhaGujq704H8x3DZHcZM5L4.webp?r=258",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABQemYufprEmAtNhy1TH-sk9_SFblrcGrIHaFUzTjT7Znkapkp6pSFXW5x9KPhX8AlEszeAlrTTPgUlCuhreE4gZ9Z_E.webp?r=0ba",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABUYJPbm-cXbr0iNo5QGDp7KhYXLCGfzFJL7_3qtAfaU-NkiPtoTGvMCcc7Oa-06Ymg_3s3OEwrv9U93zwVCDRqlcO3c.webp?r=549",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABaadys9r9lL8EEHkGIkk9tIfeE1aFfFlxLEzeEiNRUKvjRFhyFcw1S42aVASdc2VrkT8ox0GdtGd6q2K5eAbgvCZffg.webp?r=a4b",
+  "https://images.unsplash.com/photo-1585951237318-9ea5e175b891?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1536300007881-7e482242baa5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=674&q=80",
+  "https://images.unsplash.com/photo-1579702455224-c0dd4ac78234?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1369&q=80",
+  "https://images.unsplash.com/photo-1617182635496-c5c474367085?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+  "https://images.unsplash.com/photo-1528495612343-9ca9f4a4de28?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
+  "https://images.unsplash.com/photo-1579566346927-c68383817a25?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1518715303843-586e350765b2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1617258683488-df59909f25f0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=644&q=80",
 
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABbm33kiGW3C_11VxssxKFjcT-zEz5GAaWQuaoSBcz5X3WW1JpIK5RWZj54NxiIkHo9x5OjUzGcZo0Wynix2rQi-0H14.webp?r=488",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABUYQKN5djWaag8OHjuDmqKVXU3XhUim9j5t9uBpuey1wXiwqKP1oEWD6BqVkOGjshrnq32hSMEtNqhw-bqmDgjrKKI8.webp?r=a62",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABeVABduCR8GmBlBxJ5sz04xuEUa5DdyC41F563vm-jYTOoWkT7R9wB0Bc4-ZMG1CVi3lyl4ibxTkGnyxHiXZ8s1ol90.webp?r=bf9",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABQIUswywZ36iqJ8r3YsgUpYJlO5UbZtUxtI7UGqSet-1A3AhCP9iK8-MExU0JeS-tCo4_jJC8EQ_AZlWY8ImQIVLZLQ.webp?r=16b",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABRMC1YYOELE9p4-aK8-cKadxHXTs9TYIJUQkKScV7GxzLcqaGdg_F0bXR36P-CRs1NmpeWL6EUYrd7ulOU9kjzIguQ8.webp?r=339",
+  "https://images.unsplash.com/photo-1543862809-2c9e0bcdc075?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=564&q=80",
+  "https://images.unsplash.com/photo-1579156412503-f22426cc6386?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1352&q=80",
+  "https://images.unsplash.com/photo-1514068574489-503a8eb91592?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1390&q=80",
+  "https://images.unsplash.com/photo-1521714161819-15534968fc5f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1572188863110-46d457c9234d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
 
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABci-djwlZ2StYI_27v1dWEWRsuOZvJ3hWnOngQcDXlhfIYFd_uOJgjiWTY7LtpPK2FDYJ3qJpHJfi9HGonF-BjG-y7I.webp?r=fb0",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABQmYO94F1bxeZNApDCgMr8Np7XN7l1B8sEIcduIVWDWRYFcuzMSBYeaSJan6TKnpGv8o5gjTzFvGKjytJMz0ATYJXTM.webp?r=92a",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABS_dRSlFU_u0tNY5yVJ_1djEC0sKk1bkMerdJkC7qbycU2puAK__BeKQu_-ZdhcTnr_lw8q8wEHs8nOlMGOH67N71qA.webp?r=342",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABXUG5OjcwHhsnNLVug5HH5ZJf7zhhOjOYMHLUnjquqG3sZm9DRnHQrz5-TQuVR9qXSKg2vhHeKrlO0dc9z0kgxfPtDQ.webp?r=a5a",
-  "https://occ-0-2706-2705.1.nflxso.net/dnm/api/v6/X194eJsgWBDE2aQbaNdmCXGUP-Y/AAAABTK-4T4k6ntqfi35Jm4FSZIIhQLJkvOa-0ULw6tnJbPVZgpDR9sLgPvbOMwqnqPLSdgkt7VjEGRQ7wdab3C8W8AIrcU.webp?r=4d7",
+  "https://images.unsplash.com/photo-1611419010196-a360856fc42f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+  "https://images.unsplash.com/photo-1575470180257-7183ddca844f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
+  "https://images.unsplash.com/photo-1584253660192-de72b033c220?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+  "https://images.unsplash.com/photo-1611523792722-16952e48cffa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
 ];
 
-imgs.forEach((src) => {
-  var newItem = document.createElement("li");
-  var newMovie = document.createElement("div");
-  var newImage = document.createElement("img");
-  newImage.src = src;
-  newMovie.appendChild(newImage);
-  newMovie.className = "item";
-  newItem.appendChild(newMovie);
-  var list = document.getElementById("myList");
-  list.insertBefore(newItem, list.childNodes[list.childNodes.length - 1]);
-});
+function populateSlider() {
+  imgs.forEach((src) => {
+    const newMovie = document.createElement("div");
+    newMovie.className = "movie";
+    var img = document.createElement("img");
+    img.src = src;
+    newMovie.appendChild(img);
+
+    slider.insertBefore(
+      newMovie,
+      slider.childNodes[slider.childNodes.length - 1]
+    );
+  });
+}
+
+populateSlider();
+
+function updateIndicators(index) {
+  indicators.forEach((indicator) => {
+    indicator.classList.remove("active");
+  });
+  let newActiveIndicator = indicators[index];
+  newActiveIndicator.classList.add("active");
+}
 
 slider.addEventListener("scroll", (e) => {
   let x = slider.scrollLeft;
@@ -53,25 +73,49 @@ btnLeft.addEventListener("click", (e) => {
 btnRight.addEventListener("click", (e) => {
   console.log("going right");
 
+  let movieWidth = document.querySelector(".movie").offsetWidth;
+  let scrollDistance = movieWidth * 6;
   let x = slider.scrollLeft;
-  let width = slider.offsetWidth;
-  width -= width * 0.04;
 
   console.log(`x = ${x}`);
-  console.log(`width = ${width}`);
+  console.log(`scrollDistance = ${scrollDistance}`);
 
-  // Scroll back to beginning if we're currently at the end
-  if (x >= width * 1.5) {
+  if (activeIndex == 2) {
+    // duplicate all the items in the slider
+    populateSlider();
     slider.scrollBy({
       top: 0,
-      left: -9999,
+      left: +scrollDistance,
       behavior: "smooth",
     });
+    activeIndex = 0;
+    updateIndicators(activeIndex);
+
+    // Scroll back to beginning if we're currently at the end
+    // slider.scrollBy({
+    //   top: 0,
+    //   left: -9999,
+    //   behavior: "smooth",
+    // });
   } else {
     slider.scrollBy({
       top: 0,
-      left: +width,
+      left: +scrollDistance,
       behavior: "smooth",
     });
+    activeIndex = (activeIndex + 1) % 3;
+    console.log(activeIndex);
+    updateIndicators(activeIndex);
   }
+
+  x = slider.scrollLeft;
+  width = slider.offsetWidth;
+
+  console.log(`x = ${x}`);
+  console.log(`width = ${width}`);
+});
+
+slider.addEventListener("scroll", (e) => {
+  console.log(slider.scrollLeft);
+  console.log(slider.offsetWidth);
 });
