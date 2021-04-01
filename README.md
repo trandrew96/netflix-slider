@@ -1,3 +1,5 @@
 # netflix-slider
 
-A replica of the Netflix sliders. Built using vanilla js.
+A basic replica of the Netflix sliders, including the infinite scroll!
+
+Built using vanilla js.
