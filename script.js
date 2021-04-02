@@ -98,6 +98,7 @@ function populateSlider() {
 }
 
 populateSlider();
+populateSlider();
 
 // delete the initial movie in the html
 const initialMovie = document.getElementById("movie0");
@@ -114,7 +115,8 @@ function updateIndicators(index) {
 
 // Scroll Left button
 btnLeft.addEventListener("click", (e) => {
-  let movieWidth = document.querySelector(".movie").offsetWidth;
+  let movieWidth = document.querySelector(".movie").getBoundingClientRect()
+    .width;
   let scrollDistance = movieWidth * 6; // Scroll the length of 6 movies. TODO: make work for mobile because (4 movies/page instead of 6)
 
   slider.scrollBy({
@@ -129,8 +131,12 @@ btnLeft.addEventListener("click", (e) => {
 
 // Scroll Right button
 btnRight.addEventListener("click", (e) => {
-  let movieWidth = document.querySelector(".movie").offsetWidth;
+  let movieWidth = document.querySelector(".movie").getBoundingClientRect()
+    .width;
   let scrollDistance = movieWidth * 6; // Scroll the length of 6 movies. TODO: make work for mobile because (4 movies/page instead of 6)
+
+  console.log(`movieWidth = ${movieWidth}`);
+  console.log(`scrolling right ${scrollDistance}`);
 
   // if we're on the last page
   if (activeIndex == 2) {
