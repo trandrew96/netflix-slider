@@ -6,16 +6,17 @@ const indicators = document.querySelectorAll(".indicator");
 let baseSliderWidth = slider.offsetWidth;
 let activeIndex = 0;
 
-let imgs = [
+let movies = [
   {
     src:
       "https://images.unsplash.com/photo-1585951237318-9ea5e175b891?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
   },
   {
     src:
-      "https://images.unsplash.com/photo-1536300007881-7e482242baa5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      "https://images.unsplash.com/photo-1611419010196-a360856fc42f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
     title: "Toy Story",
   },
+
   {
     src:
       "https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=674&q=80",
@@ -23,7 +24,7 @@ let imgs = [
   },
   {
     src:
-      "https://images.unsplash.com/photo-1579702455224-c0dd4ac78234?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1369&q=80",
+      "https://images.unsplash.com/photo-1579566346927-c68383817a25?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
     title: "Toy Story",
   },
   {
@@ -34,11 +35,6 @@ let imgs = [
   {
     src:
       "https://images.unsplash.com/photo-1528495612343-9ca9f4a4de28?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80",
-    title: "Toy Story",
-  },
-  {
-    src:
-      "https://images.unsplash.com/photo-1579566346927-c68383817a25?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
     title: "Toy Story",
   },
   {
@@ -78,9 +74,10 @@ let imgs = [
   },
   {
     src:
-      "https://images.unsplash.com/photo-1611419010196-a360856fc42f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1579702455224-c0dd4ac78234?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1369&q=80",
     title: "Toy Story",
   },
+
   {
     src:
       "https://images.unsplash.com/photo-1575470180257-7183ddca844f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80",
@@ -96,16 +93,17 @@ let imgs = [
       "https://images.unsplash.com/photo-1611523792722-16952e48cffa?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80",
     title: "Toy Story",
   },
+  {
+    src:
+      "https://images.unsplash.com/photo-1536300007881-7e482242baa5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+    title: "Toy Story",
+  },
 ];
 
+// Fill the slider with all the movies in the "movies" array
 function populateSlider() {
-  imgs.forEach((image) => {
-    // const newMovie = document.createElement("div");
-    // newMovie.className = "movie";
-    // var img = document.createElement("img");
-    // img.src = image.src;
-    // newMovie.appendChild(img);
-
+  movies.forEach((image) => {
+    // Clone the initial movie thats included in the html, then replace the image with a different one
     const newMovie = document.getElementById("movie0");
     let clone = newMovie.cloneNode(true);
     let img = clone.querySelector("img");
@@ -116,6 +114,10 @@ function populateSlider() {
 }
 
 populateSlider();
+
+// delete the initial movie in the html
+const initialMovie = document.getElementById("movie0");
+initialMovie.remove();
 
 function updateIndicators(index) {
   indicators.forEach((indicator) => {
