@@ -5,7 +5,14 @@
 *********************************/
 :root {
   --movie-width: 16vw;
+  --movie-height: 200px;
   --arrow-width: 50px;
+  --slider-py: 200px;
+}
+@media only screen and (max-width: 1000px) {
+  :root {
+    --movie-width: 25vw;
+  }
 }
 
 body {
@@ -29,12 +36,13 @@ body {
 *
 *********************************/
 .slider {
-  margin-top: 150px;
-  height: 120%;
   width: 100%;
   overflow-x: scroll;
+  overflow-y: visible;
   white-space: nowrap;
   position: relative;
+  padding-top: var(--slider-py);
+  padding-bottom: var(--slider-py);
 }
 
 /*
@@ -46,7 +54,7 @@ body {
   width: 100px;
   position: absolute;
   right: 0;
-  top: -40px;
+  top: calc(var(--slider-py) - 60px);
 }
 .indicator {
   width: 15px;
@@ -65,15 +73,22 @@ body {
 *********************************/
 .movie {
   width: var(--movie-width);
-  height: 200px;
+  height: var(--movie-height);
   display: inline-block;
   position: relative;
   color: white;
   padding: 0 2px;
+  font-size: 0.8rem;
+  transition: all 0.8s ease-in-out;
 }
 
 .movie:nth-of-type(1) {
   margin-left: var(--arrow-width);
+}
+
+.movie:hover {
+  transform: scale(1.3);
+  z-index: 2;
 }
 
 .movie img {
@@ -83,6 +98,71 @@ body {
   border-radius: 10px;
 }
 
+.description {
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  background-color: #272727;
+  width: var(--movie-width);
+  margin-top: -10px;
+  padding: 10px 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Make description visible when movie is hovered */
+.movie:hover > .description {
+  display: block;
+}
+
+.movie:hover > img {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.description__buttons-container {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.description__text-container {
+  padding: 10px;
+}
+
+.description__match {
+  color: green;
+}
+
+.description__rating {
+  outline: 1px solid white;
+  padding: 0 3px;
+  margin: 0 5px;
+}
+
+.description__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 2px solid white;
+  text-align: center;
+  font-size: 8px;
+  margin-right: 5px;
+  border-radius: 100%;
+}
+
+.description__button:hover {
+  border-color: grey;
+  color: grey;
+}
+
+.description__button:nth-of-type(5) {
+  margin-left: auto;
+  margin-right: 0;
+}
+
 /*
 *
 * BUTTONS
@@ -90,14 +170,16 @@ body {
 *********************************/
 .btn-nav {
   width: var(--arrow-width);
-  height: 100%;
+  height: var(--movie-height);
   border-radius: 5px;
   position: absolute;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.3);
   outline: none;
   border: none;
   color: white;
-  z-index: 9999;
+  top: var(--slider-py);
+  z-index: 5;
 }
 
 #moveLeft {
@@ -106,5 +188,4 @@ body {
 
 #moveRight {
   right: 0;
-  top: 0;
 }
