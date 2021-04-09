@@ -87,11 +87,6 @@ body {
   margin-left: var(--arrow-width);
 }
 
-.movie:hover {
-  transform: scale(1.3);
-  z-index: 2;
-}
-
 .movie img {
   object-fit: cover;
   height: 100%;
@@ -111,14 +106,19 @@ body {
   border-bottom-right-radius: 10px;
 }
 
-/* Make description visible when movie is hovered */
-.movie:hover > .description {
-  display: block;
-}
-
-.movie:hover > img {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+@media only screen and (min-width: 900px) {
+  .movie:hover {
+    transform: scale(1.3);
+    z-index: 2;
+  }
+  /* Make description visible when movie is hovered */
+  .movie:hover > .description {
+    display: block;
+  }
+  .movie:hover > img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }
 
 .description__buttons-container {
@@ -193,7 +193,15 @@ body {
   right: 0;
 }
 
-.container:hover .btn-nav,
-.container:hover .container-indicators {
-  visibility: visible;
+@media only screen and (max-width: 900px) {
+  .btn-nav {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 901px) {
+  .container:hover .btn-nav,
+  .container:hover .container-indicators {
+    visibility: visible;
+  }
 }
